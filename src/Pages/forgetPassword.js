@@ -1,6 +1,6 @@
 import React from "react";
 import { Footer } from "../Components/footer";
-import { Navbarr } from "../Components/navbar";
+import Navbarr from "../Components/navbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../styles/forgetPassword.css";
@@ -26,15 +26,16 @@ export const ForgetPassword = () => {
       })
         .then((res) => {
           if (res.status == 200) {
-            window.location = '/loginadv';
-            
+            window.location = '/ResetPassword';
+
             return res.text();
           }
           return res.text();
         })
         .then((data) => {
-          alert(data);
           console.log(data);
+          alert(data);
+          
         });
     } catch (error) {
       console.log("Error-> ", error);
@@ -44,9 +45,9 @@ export const ForgetPassword = () => {
     <>
       <Navbarr />
       <div className="forgetPassword">
-        <Form style={{ borderRadius: "20px", boxShadow: "6px 6px 4px rgba(0, 0, 0, 0.2)" }} 
-        className="forgetPasswordForm" 
-        id="forgetPasswordForm">
+        <Form style={{ borderRadius: "20px", boxShadow: "6px 6px 4px rgba(0, 0, 0, 0.2)" }}
+          className="forgetPasswordForm"
+          id="forgetPasswordForm">
           <h3 className="forgetPasswordHeader">Forgot Password</h3>
           <center> <p>
             Enter email to which reset link will be sent
