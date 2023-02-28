@@ -8,34 +8,34 @@ export function Dashboardadv() {
   const [clientsList, setClientsList] = useState([]);
   var ntokenn = "";
   useEffect(() => {
-    // setClientsList([]);
-    // let token = localStorage.getItem("JWT-Token");
-    // if(token==""){
-    //   alert("not authorized");
-    // }
-    // let ntoken = "Bearer " + token.replaceAll('"', '');
-    // ntokenn = ntoken;
+    setClientsList([]);
+    let token = localStorage.getItem("JWT-Token");
+    if(token==""){
+      alert("not authorized");
+    }
+    let ntoken = "Bearer " + token.replaceAll('"', '');
+    ntokenn = ntoken;
 
-    // try {
-    //   console.log("made a get call");
-    //   fetch("https://localhost:7061/api/User/Get-All-Clients-for-an-advisor", {
-    //     method: "GET",
-    //     headers: {
-    //       'Content-type': 'application/json',
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
-    //       "Authorization": ntoken,
-    //       "Access-Control-Max-Age": 86400
-    //     }
-    //   })
-    //     .then(res => res.json())
-    //     .then((data) => {
-    //       setClientsList(data);
+    try {
+      console.log("made a get call");
+      fetch("https://localhost:7061/api/User/Get-All-Clients-for-an-advisor", {
+        method: "GET",
+        headers: {
+          'Content-type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+          "Authorization": ntoken,
+          "Access-Control-Max-Age": 86400
+        }
+      })
+        .then(res => res.json())
+        .then((data) => {
+          setClientsList(data);
 
-    //     })
-    // } catch (error) {
-    //   console.log("Error-> ", error);
-    // }
+        })
+    } catch (error) {
+      console.log("Error-> ", error);
+    }
   },[])
 
   const cli = clientsList.map((e,ind) =>{
