@@ -5,17 +5,33 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../styles/Logininvs.css";
 
-
 export const Loginadv = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validated, setValidated] = useState(false);
 
+  const handleSubmit = (event) => {
+    // const form = event.currentTarget;
+    // console.log(form)
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
 
+    // setValidated(true);
+  };
   const SignIn = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      setValidated(true);
+    };
+    
+    
+
     let values = {
-      "email": email,
-      "password": password,
+      email: email,
+      password: password,
     };
     try {
       fetch("https://localhost:7061/api/User/AdvisorLogin", {
@@ -30,11 +46,10 @@ export const Loginadv = () => {
       })
         .then((res) => {
           if (res.status == 200) {
-            window.location = '/clientlist';
+            window.location = "/clientlist";
             return res.text();
-          }
-          else{
-            window.location ="/loginadv"
+          } else {
+            alert("User not Found")
           }
           return res.text();
         })
@@ -44,47 +59,98 @@ export const Loginadv = () => {
     } catch (error) {
       console.log("Error-> ", error);
     }
+  
   };
   return (
     <>
       <Navbarr />
-      <div style={{ backgroundColor: "#FAFAFD" }}><center>
-        <div className="wholeLoginadvPage" style={{ marginTop: "6%" }}>
-          <Form style={{ borderRadius: "20px", boxShadow: "6px 6px 4px rgba(0, 0, 0, 0.2)" }} className="signInForm" id="signInForm" >
-            <center>
-              <img
-                style={{ width: "15%", height: "15%" }}
-                className="logoimg"
-                src={require("../Images/logo.png")}
-                alt="logo"
-              />
-              <span style={{ fontWeight: "700", fontSize: "120%" }}> Sign In</span>
-              <p>Enter details to login into your<b> Advisor</b> account</p>
-              <hr></hr>
-            </center>
-            <Form.Group className="mb-3" controlId="formBasicEmail1" md="true">
-              <Form.Control placeholder="Enter your email-id" value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
-            </Form.Group>
+      <div id="fullcont">
+        <center>
+          <div className="wholeLoginadvPage" style={{ marginTop: "6%" }}>
+            <Form
+              noValidate
+              validated={validated}
+              onSubmit={handleSubmit}
+              style={{
+                borderRadius: "20px",
+                boxShadow: "6px 6px 4px rgba(0, 0, 0, 0.2)",
+              }}
+              className="signInForm"
+              id="signInForm"
+            >
+              <center>
+                <img
+                  style={{ width: "15%", height: "15%" }}
+                  className="logoimg"
+                  src={require("../Images/logo.png")}
+                  alt="logo"
+                />
+                <span style={{ fontWeight: "700", fontSize: "120%" }}>
+                  {" "}
+                  Sign In
+                </span>
+                <p>
+                  Enter details to login into your<b> Advisor</b> account
+                </p>
+                <hr></hr>
+              </center>
+              <Form.Group
+                className="mb-3"
+                controlId="formBasicEmail1"
+                md="true"
+              >
+                <Form.Control
+                  required
+                  placeholder="Enter your email-id"
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a valid Email id
+                </Form.Control.Feedback>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicEmail" md="true">
-
-              <Form.Control
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="Enter your password"
-              />
-            </Form.Group>
-            <Button style={{ fontSize: "75%", marginTop: "2%", marginLeft: "72%" }} variant="link" size="sm" id="abc" href="/forgetPassword">
-              Forgot Password?
-            </Button>
-            <center><Button style={{ fontFamily: "Arial", borderRadius: "14px", width: "50%", borderTop: "0px" }} onClick={SignIn} variant="primary" type="submit">
-              Sign In
-            </Button></center>
-
-          </Form>
-        </div>
-      </center></div>
+              <Form.Group controlId="formBasicEmail" md="true">
+                <Form.Control
+                 
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="Enter your password"
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please enter your password
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Button
+                style={{ fontSize: "75%", marginTop: "2%", marginLeft: "72%" }}
+                variant="link"
+                size="sm"
+                id="abc"
+                href="/forgetPassword"
+              >
+                Forgot Password?
+              </Button>
+              <center>
+                <Button
+                  id="btnSave"
+                  style={{
+                    fontFamily: "Arial",
+                    borderRadius: "14px",
+                    width: "50%",
+                    borderTop: "0px",
+                  }}
+                  onClick={SignIn}
+                  variant="primary"
+                  type="submit"
+                >
+                  Sign In
+                </Button>
+              </center>
+            </Form>
+          </div>
+        </center>
+      </div>
 
       <Footer />
     </>

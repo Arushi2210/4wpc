@@ -16,81 +16,34 @@ export const Roww = ({
   API_AdviserClientList,
   place,
 }) => {
+  
+  const [firstName, setFirstname] = useState("");
+  const [lastName, setLastname] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Phone, setPhone] = useState("");
+  const [Company, setCompany] = useState("");
+  const [City, setCity] = useState("");
+  const [State, setState] = useState("");
+  const [Address, setAddress] = useState("");
   const [value, setValue] = useState(placeholder);
   const [disabled, setDisabled] = useState(true);
 
-  const handleEditClick = () => {
+  const handleEditClick = (e) => {
     setDisabled(false);
   };
 
   const handleSaveClick = async () => {
     setDisabled(true);
     //save logic goes here
-    if (place == 1) {
-      const listItems = (items || []).map((it) =>
-        it.id === id ? { ...it, clientName: value } : it
-      );
-      setItems(listItems);
+    let token = localStorage.getItem("JWT-Token");
 
-      const myItem = listItems.filter((it) => it.id === id);
-      const updateOptions = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ clientName: value }),
-      };
-      const reqUrl = `${API_AdviserClientList}/${id}`;
-      const result = await apiRequest(reqUrl, updateOptions);
-    } else if (place == 2) {
-      const listItems = (items || []).map((it) =>
-        it.id === id ? { ...it, mail: value } : it
-      );
-      setItems(listItems);
-
-      const myItem = listItems.filter((it) => it.id === id);
-      const updateOptions = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ mail: value }),
-      };
-      const reqUrl = `${API_AdviserClientList}/${id}`;
-      const result = await apiRequest(reqUrl, updateOptions);
-    } else if (place == 3) {
-      const listItems = (items || []).map((it) =>
-        it.id === id ? { ...it, phoneNo: value } : it
-      );
-      setItems(listItems);
-
-      const myItem = listItems.filter((it) => it.id === id);
-      const updateOptions = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phoneNo: value }),
-      };
-      const reqUrl = `${API_AdviserClientList}/${id}`;
-      const result = await apiRequest(reqUrl, updateOptions);
-    } else if (place == 4) {
-      const listItems = (items || []).map((it) =>
-        it.id === id ? { ...it, newInves: value } : it
-      );
-      setItems(listItems);
-
-      const myItem = listItems.filter((it) => it.id === id);
-      const updateOptions = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ newInves: value }),
-      };
-      const reqUrl = `${API_AdviserClientList}/${id}`;
-      const result = await apiRequest(reqUrl, updateOptions);
+    if (token == "") {
+      alert("not authorized");
+      window.location = '/loginadv'
     }
+    token = "Bearer " + token.replaceAll('"', '');
+    
+    
   };
   
   return (

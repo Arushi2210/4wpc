@@ -1,3 +1,8 @@
+#everythingg {
+  background-color: #fafafd;
+  height: 100%;
+  width: 100vw;
+}
 .clientname {
   text-align: center;
   width: 96%;
@@ -76,7 +81,7 @@
   
 }
 #btnSave {
-  margin-top: 2%;
+  
   background-color: #212529;
   border: #212529;
   width: fit-content;

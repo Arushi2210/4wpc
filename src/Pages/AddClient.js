@@ -6,13 +6,11 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { Footer } from "../Components/footer";
 import { useEffect } from "react";
-import { MDBIcon } from 'mdb-react-ui-kit';
+import { MDBIcon } from "mdb-react-ui-kit";
 import "../styles/addclient.css";
-import Navbar2  from "../Components/navbar2";
+import Navbar2 from "../Components/navbar2";
 
 export const AddClient = () => {
-
-
   // const [firstname,setfirstName]=useState("");
   // const [lastname,setlastname]=useState("");
   // const [email,setemail]=useState("");
@@ -21,9 +19,7 @@ export const AddClient = () => {
   // const [city,setcity]=useState("");
   // const [state,setstate]=useState("");
   // const [address,setaddress]=useState("");
-  const [adbisorId,setadbisorId]=useState("");
-
-
+  const [adbisorId, setadbisorId] = useState("");
 
   const [firstName, setFirstname] = useState("");
   const [lastName, setLastname] = useState("");
@@ -36,29 +32,39 @@ export const AddClient = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
   const [bearertoken, setBearertoken] = useState("");
+  const [validated, setValidated] = useState(false);
 
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
 
   useEffect(() => {
     let token = localStorage.getItem("JWT-Token");
-      if(token==""){
-        alert("not authorized");
-      }
-    
-    let ntoken = "Bearer " + token.replaceAll('"', '');
+    if (token == "") {
+      alert("not authorized");
+    }
+
+    let ntoken = "Bearer " + token.replaceAll('"', "");
     setBearertoken(ntoken);
     try {
       console.log("made a get call");
-      fetch("https://localhost:7061/api/User/Advisor-Info", {
+      fetch("https://localhost:7061/api/User/AdvisorInfo", {
         method: "GET",
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
-          "Authorization": ntoken,
-          "Access-Control-Max-Age": 86400
-        }
+          Authorization: ntoken,
+          "Access-Control-Max-Age": 86400,
+        },
       })
-        .then(res => res.json())
+        .then((res) => res.json())
         .then((data) => {
           // setaddress(data.address);
           // setcity(data.city);
@@ -69,15 +75,13 @@ export const AddClient = () => {
           // setcompany(data.company);
           // setstate(data.state);
           setadbisorId(data.advisorID);
-        })
+        });
     } catch (error) {
       console.log("Error-> ", error);
     }
-  }, [])
-
+  }, []);
 
   const Register = (e) => {
-
     e.preventDefault();
     let values = {
       firstName: firstName,
@@ -91,44 +95,50 @@ export const AddClient = () => {
       city: City,
       state: State,
       password: password,
-      confirmPassword: confirmPassword
+      confirmPassword: confirmPassword,
     };
 
     try {
-
       fetch("https://localhost:7061/api/User/Registration", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
-          "Authorization": bearertoken,
-          "Access-Control-Max-Age": 86400
+          Authorization: bearertoken,
+          "Access-Control-Max-Age": 86400,
         },
         body: JSON.stringify(values),
       })
         .then((res) => {
-
           if (res.status === 200) alert("User Registered");
         })
         .then((data) => {
-
           if (data === "Undefined") alert("some error occured");
           console.log(data);
-          window.location = "/clientlist";
         });
     } catch (error) {
       console.log("Error-> ", error);
     }
   };
   return (
-
     <>
       <Navbar2 />
-      <div className="container" style={{ marginTop: "7%" }}>
+      <div className="everything">
+      <div className="container" style={{ marginTop: "0%" }}>
         <center>
-
-          <Form style={{ borderRadius: "20px", boxShadow: "6px 6px 4px rgba(0, 0, 0, 0.2)" }} className="signUpForm" id="signUpForm">
+          <Form
+            noValidate
+            validated={validated}
+            style={{
+              borderRadius: "20px",
+              boxShadow: "6px 6px 4px rgba(0, 0, 0, 0.2)",
+              
+            }}
+            onSubmit={handleSubmit}
+            className="signUpForm"
+            id="signUpForm"
+          >
             <center>
               <img
                 style={{ width: "16%", height: "41%" }}
@@ -136,27 +146,33 @@ export const AddClient = () => {
                 src={require("../Images/logo.png")}
                 alt="logo"
               />
-              <span style={{ fontWeight: "700", fontSize: "120%" }}> Add Client</span>
+              <span style={{ fontWeight: "700", fontSize: "120%" }}>
+                {" "}
+                Add Client
+              </span>
 
-              <p>Enter details of new<b> Client</b> here</p>
+              <p>
+                Enter details of new<b> Client</b> here
+              </p>
               <hr></hr>
             </center>
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-
                   <Form.Control
+                    required
                     value={firstName}
                     onChange={(e) => setFirstname(e.target.value)}
                     type="text"
                     placeholder="First name"
                   />
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-
                   <Form.Control
+                    required
                     value={lastName}
                     onChange={(e) => setLastname(e.target.value)}
                     type="text"
@@ -169,8 +185,8 @@ export const AddClient = () => {
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-
                   <Form.Control
+                    required
                     value={Email}
                     onChange={(e) => setEmail(e.target.value)}
                     type="email"
@@ -180,8 +196,8 @@ export const AddClient = () => {
               </Col>
               <Col>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-
                   <Form.Control
+                    required
                     value={Phone}
                     onChange={(e) => setPhone(e.target.value)}
                     type="phone"
@@ -191,55 +207,13 @@ export const AddClient = () => {
               </Col>
             </Row>
 
-
-
-            <Row >
-              <Form.Group as={Col} md controlId="formGridEmail" className="mb-3">
-
-                <Form.Control
-                  value={Company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  type="text"
-                  placeholder="Company name"
-                />
-              </Form.Group>
-
-              <Form.Group as={Col} md controlId="formGridPassword">
-
-                <Form.Control
-                  value={Address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  type="text"
-                  placeholder="Full address"
-                />
-              </Form.Group>
-            </Row>
-
-            <Row >
-              <Form.Group as={Col} md controlId="formGridPassword">
-
-                <Form.Control
-                  value={City}
-                  onChange={(e) => setCity(e.target.value)}
-                  type="text"
-                  placeholder="City"
-                />
-              </Form.Group>
-
-              <Form.Group as={Col} md controlId="formGridEmail" className="mb-3">
-
-                <Form.Control
-                  value={State}
-                  onChange={(e) => setState(e.target.value)}
-                  type="text"
-                  placeholder="State"
-                />
-              </Form.Group>
-            </Row>
-
             <Row className="mb-3">
-              <Form.Group as={Col} md controlId="formGridEmail" className="mb-3">
-
+              <Form.Group
+                as={Col}
+                md
+                controlId="formGridEmail"
+                className="mb-3"
+              >
                 <Form.Control
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -259,14 +233,22 @@ export const AddClient = () => {
               </Form.Group>
             </Row>
             <center>
-              <Button style={{ fontFamily: "Arial", borderRadius: "14px", borderTop: "10%" }} onClick={Register} type="submit">
+              <Button
+                id="btnSave"
+                style={{
+                  fontFamily: "Arial",
+                  borderRadius: "14px",
+                  borderTop: "10%",
+                }}
+                onClick={Register}
+                type="submit"
+              >
                 Register Client
-              </Button >
+              </Button>
             </center>
-
-
           </Form>
         </center>
+      </div>
       </div>
     </>
   );

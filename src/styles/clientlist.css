@@ -1,3 +1,8 @@
+#everything {
+  background-color: #fafafd;
+  height: 100vh;
+  width: 100vw;
+}
 .rounded-table {
   border-collapse: separate;
   border-spacing: 0;
@@ -10,7 +15,7 @@
 .rounded-table td {
   border-bottom: 1px solid #dee2e6;
   padding: 0.75rem;
-  background-color: #F08D57;
+  background-color: rgb(255, 255, 255) !important;
   vertical-align: top;
   text-align: center;
   font-weight: 500;

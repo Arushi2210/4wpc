@@ -16,7 +16,7 @@ import { ForgetPassword } from './Pages/forgetPassword';
 import { Investment } from './Pages/Investment';
 import { AdviserProfile } from './Pages/AdvisorProfile';
 import { AddClient } from './Pages/AddClient';
-import { EditClientDetails } from './Pages/editClientDetails';
+import { EditClientDetails } from './Pages/editClientDetails1';
 import { ClientDetails } from './Pages/ClientDetails';
 import ResetPassword from './Pages/ResetPassword';
 import { Abcd } from './Pages/abc'
