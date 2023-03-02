@@ -33,7 +33,8 @@ export const AddClient = () => {
   const [password, setPassword] = useState("");
   const [bearertoken, setBearertoken] = useState("");
   const [validated, setValidated] = useState(false);
-
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -83,6 +84,10 @@ export const AddClient = () => {
 
   const Register = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      setValidated(true);
+    };
     let values = {
       firstName: firstName,
       lastName: lastName,
@@ -120,6 +125,23 @@ export const AddClient = () => {
     } catch (error) {
       console.log("Error-> ", error);
     }
+  };
+  const handlePasswordChange = (event) => {
+    const password = event.target.value;
+    setPassword(password);
+    setIsPasswordValid(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])(?=.*[a-zA-Z]).{8,}$/.test(
+        password
+      )
+    );
+    if (confirmPassword) {
+      setIsConfirmPasswordValid(confirmPassword === password);
+    }
+  };
+  const handleConfirmPasswordChange = (event) => {
+    const confirmPassword = event.target.value;
+    setConfirmPassword(confirmPassword);
+    setIsConfirmPasswordValid(confirmPassword === password);
   };
   return (
     <>
@@ -166,7 +188,7 @@ export const AddClient = () => {
                     type="text"
                     placeholder="First name"
                   />
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Enter first name of client</Form.Control.Feedback>
                 </Form.Group>
               </Col>
               <Col>
@@ -178,6 +200,7 @@ export const AddClient = () => {
                     type="text"
                     placeholder="Last name"
                   />
+                  <Form.Control.Feedback type="invalid">Enter last name of client</Form.Control.Feedback>
                 </Form.Group>
               </Col>
             </Row>
@@ -192,6 +215,7 @@ export const AddClient = () => {
                     type="email"
                     placeholder="Email"
                   />
+                  <Form.Control.Feedback type="invalid">Enter Email-id of client</Form.Control.Feedback>
                 </Form.Group>
               </Col>
               <Col>
@@ -200,9 +224,11 @@ export const AddClient = () => {
                     required
                     value={Phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    type="phone"
+                    type="tel"
+                    pattern="[0-9]{10}"
                     placeholder="Phone"
                   />
+                  <Form.Control.Feedback type="invalid">Enter phone number of client</Form.Control.Feedback>
                 </Form.Group>
               </Col>
             </Row>
@@ -215,21 +241,29 @@ export const AddClient = () => {
                 className="mb-3"
               >
                 <Form.Control
+                  required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handlePasswordChange}
                   type="password"
+                  isInvalid={!isPasswordValid}
                   placeholder="Set a password"
                 />
+                <Form.Control.Feedback type="invalid">Password must have at least one lowercase letter, one uppercase letter,
+          one special character, one numeric digit and be at least 8 characters long.</Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group as={Col} md controlId="formGridPassword">
                 {/* <Form.Label>Confirm Password</Form.Label> */}
                 <Form.Control
+                required
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={handleConfirmPasswordChange}
                   type="password"
                   placeholder="Confirm password"
+                  isInvalid={!isConfirmPasswordValid}
                 />
+                <Form.Control.Feedback type="invalid">Passwords do not match.</Form.Control.Feedback>
+                
               </Form.Group>
             </Row>
             <center>

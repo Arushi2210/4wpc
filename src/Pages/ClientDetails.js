@@ -47,6 +47,7 @@ export const ClientDetails = () => {
   const [modelAPLid, setModelAPLid] = useState("");
   const [investmentAmount, setInvestmentAmount] = useState(0);
   const [activestatus, setActivestatus] = useState(1);
+  const [validated, setValidated] = useState(false);
 
   const func = () => {
     if (cont === false) {
@@ -95,7 +96,6 @@ export const ClientDetails = () => {
           }
           if (res.status !== 200) {
             alert(res.status);
-            
           }
         })
         .then((data) => {
@@ -279,6 +279,13 @@ export const ClientDetails = () => {
   };
   const save = (e) => {
     setDisabled(true);
+    e.preventDefault();
+    const form = e.currentTarget;
+    console.log(form.checkValidity());
+
+    if (form.checkValidity() === true) {
+      setValidated(true);
+    }
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
       alert("not authorized");
@@ -373,6 +380,7 @@ export const ClientDetails = () => {
                           </div>
                         </div>
                         <hr className="mt-0 mb-4" />
+
                         <MDBRow className="pt-1">
                           <MDBCol
                             size="6"
@@ -385,11 +393,13 @@ export const ClientDetails = () => {
                                   First Name
                                 </MDBTypography>
                                 <Form.Control
+                                  required={true}
                                   value={firstname}
                                   onChange={(e) => setfirstName(e.target.value)}
                                   type="text"
-                                  placeholder="City"
+                                  placeholder="Enter first name"
                                 />
+                                <span>First Name cannot be empty</span>
                               </Form.Group>
                             )}
                           </MDBCol>
@@ -400,11 +410,13 @@ export const ClientDetails = () => {
                                   Last Name
                                 </MDBTypography>
                                 <Form.Control
+                                  required={true}
                                   value={lastname}
                                   onChange={(e) => setlastname(e.target.value)}
                                   type="text"
-                                  placeholder="City"
+                                  placeholder="Enter last name"
                                 />
+                                <span>Last Name cannot be empty</span>
                               </Form.Group>
                             )}
                           </MDBCol>
@@ -422,12 +434,16 @@ export const ClientDetails = () => {
                               </MDBCardText>
                             )}
                             {!disabled && (
-                              <Form.Control
-                                value={email}
-                                onChange={(e) => setemail(e.target.value)}
-                                type="text"
-                                placeholder="First name"
-                              />
+                              <Form.Group>
+                                <Form.Control
+                                  required={true}
+                                  value={email}
+                                  onChange={(e) => setemail(e.target.value)}
+                                  type="email"
+                                  placeholder="Enter email"
+                                />
+                                <span>Please enter a valid email</span>
+                              </Form.Group>
                             )}
                           </MDBCol>
                           <MDBCol size="6" className="mb-3">
@@ -438,12 +454,17 @@ export const ClientDetails = () => {
                               </MDBCardText>
                             )}
                             {!disabled && (
-                              <Form.Control
-                                value={phone}
-                                onChange={(e) => setphone(e.target.value)}
-                                type="phone"
-                                placeholder="Phone"
-                              />
+                              <Form.Group>
+                                <Form.Control
+                                  required={true}
+                                  value={phone}
+                                  onChange={(e) => setphone(e.target.value)}
+                                  type="tel"
+                                  placeholder="Phone Number"
+                                  pattern="[0-9]{10}"
+                                />
+                                <span>Please enter a valid Phone Number</span>
+                              </Form.Group>
                             )}
                           </MDBCol>
                         </MDBRow>
@@ -535,27 +556,29 @@ export const ClientDetails = () => {
         </section>
 
         <h1 className="clientname">Client Investment Details</h1>
-        <Table
-          className="rounded-table"
-          hover
-          responsive
-          id="table"
-          style={{ margin: "2%", width: "92%", textAlign: "center" }}
-        >
-          <thead>
-            <tr>
-              <th>Investment Name</th>
-              <th>Investment Type</th>
-              <th>Active Status</th>
-              <th>Investment Strategy</th>
-              <th>Account ID</th>
-              <th>Model APL ID</th>
-              <th style={{ width: "20%" }}>Amount Invested</th>
-              <th>Delete Investment</th>
-            </tr>
-          </thead>
-          <tbody>{renderlist ? cli : <tr></tr>}</tbody>
-        </Table>
+        {!(listofinvestment.length==0) &&
+          <Table
+            className="rounded-table"
+            hover
+            responsive
+            id="table"
+            style={{ margin: "2%", width: "92%", textAlign: "center" }}
+          >
+            <thead>
+              <tr>
+                <th>Investment Name</th>
+                <th>Investment Type</th>
+                <th>Active Status</th>
+                <th>Investment Strategy</th>
+                <th>Account ID</th>
+                <th>Model APL ID</th>
+                <th style={{ width: "20%" }}>Amount Invested</th>
+                <th>Delete Investment</th>
+              </tr>
+            </thead>
+            <tbody>{renderlist ? cli : <tr></tr>}</tbody>
+          </Table>
+        }{(listofinvestment.length == 0) && <h4 id="notPresent">There is no investment present.</h4>}
 
         <Button
           onClick={func}
@@ -575,7 +598,6 @@ export const ClientDetails = () => {
               <Row>
                 <Form.Group
                   as={Col}
-                  style={{ width: "50%" }}
                   sm
                   className="mb-4"
                   controlId="formBasicEmail"
@@ -583,7 +605,12 @@ export const ClientDetails = () => {
                     setInvestmentname(e.target.value);
                   }}
                 >
-                  <Form.Control type="text" placeholder="Investment name" />
+                  <Form.Control
+                    required={true}
+                    type="text"
+                    placeholder="Investment name"
+                  />
+                  
                 </Form.Group>
 
                 <Form.Group as={Col} sm style={{ paddingBottom: "15px" }}>

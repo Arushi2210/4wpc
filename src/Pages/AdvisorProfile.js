@@ -168,11 +168,12 @@ export const AdviserProfile = () => {
                             <Form.Group>
                           <MDBTypography tag="h6">First Name</MDBTypography>
                           <Form.Control
+                              required = {true}
                               value={firstname}
                               onChange={(e) => setfirstName(e.target.value)}
                               type="text"
-                              placeholder="City"
-                            />
+                              placeholder="Enter First Name"
+                            /><span>Please enter First Name </span>
                             </Form.Group>
                           )}
                         </MDBCol>
@@ -181,11 +182,12 @@ export const AdviserProfile = () => {
                             <Form.Group>
                           <MDBTypography tag="h6">Last Name</MDBTypography>
                           <Form.Control
+                          required = {true}
                               value={lastname}
                               onChange={(e) => setlastname(e.target.value)}
                               type="text"
-                              placeholder="City"
-                            />
+                              placeholder="Enter Last Name"
+                            /><span>Please enter Last Name </span>
                             </Form.Group>
                           )}
                         </MDBCol>
@@ -203,12 +205,14 @@ export const AdviserProfile = () => {
                             </MDBCardText>
                           )}
                           {!disabled && (
+                            <Form.Group>
                             <Form.Control
                               value={email}
+                              required = {true}
                               onChange={(e) => setemail(e.target.value)}
-                              type="text"
-                              placeholder="City"
-                            />
+                              type="email"
+                              placeholder="Email"
+                            /><span>Please enter a valid Email</span></Form.Group>
                           )}
                         </MDBCol>
                         <MDBCol size="6" className="mb-3">
@@ -219,12 +223,15 @@ export const AdviserProfile = () => {
                             </MDBCardText>
                           )}
                           {!disabled && (
+                            <Form.Group>
                             <Form.Control
                               value={phone}
+                              required = {true}
                               onChange={(e) => setphone(e.target.value)}
-                              type="text"
-                              placeholder="City"
-                            />
+                              type="tel"
+                              pattern="[0-9]{10}"
+                              placeholder="Phone Number"
+                            /><span>Please Enter a valid Phone Number</span></Form.Group>
                           )}
                         </MDBCol>
                       </MDBRow>

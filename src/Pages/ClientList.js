@@ -88,7 +88,7 @@ export const ClientList = () => {
             className="btnClientName"
             variant="link"
           >
-            {e.firstName} {e.lastName}
+             {e.lastName} {", "} {e.firstName}
           </Button>
         </td>
         <td style={{ alignItems: "left" }}>{e.email}</td>

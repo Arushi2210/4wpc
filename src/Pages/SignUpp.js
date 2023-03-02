@@ -25,7 +25,7 @@ function SignUpp() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = (event) => {
-
+   
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -197,7 +197,7 @@ function SignUpp() {
                 <Form.Control.Feedback type="invalid">
                   Please enter your first name.
                 </Form.Control.Feedback>
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                
               </Form.Group>
             </Col>
             <Col>
@@ -213,7 +213,7 @@ function SignUpp() {
                 <Form.Control.Feedback type="invalid">
                   Please enter your last name.
                 </Form.Control.Feedback>
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                
               </Form.Group>
             </Col>
           </Row>
@@ -230,7 +230,7 @@ function SignUpp() {
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  "Please provide a valid email."
+                  Please provide a valid email.
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>
@@ -240,7 +240,8 @@ function SignUpp() {
                 <Form.Control
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  type="phone"
+                  type="tel"
+                  pattern="[0-9]{10}"
                   placeholder="Enter your phone number"
                   required
                 />
@@ -280,9 +281,10 @@ function SignUpp() {
                 name="confirmPassword"
                 placeholder="Re-enter your Password"
                 className="form-control"
+                
               />
               <Form.Control.Feedback type="invalid">
-                  Please provide a password.
+                  Password do not match
                 </Form.Control.Feedback>
               <p className="text-danger">{confirmPasswordError}</p>
             </Form.Group>

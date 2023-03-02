@@ -11,18 +11,21 @@ export const Loginadv = () => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
-    // const form = event.currentTarget;
-    // console.log(form)
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
+  // //   event.preventDefault();
+  // //   const form = event.currentTarget;
+  // //   console.log("000")
+  // //   if (form.checkValidity() === false) {
+  // //     event.preventDefault();
+  // //     event.stopPropagation();
+  // //   }
 
-    // setValidated(true);
+  // //   setValidated(true);
   };
   const SignIn = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
+    console.log(form.checkValidity())
+  
     if (form.checkValidity() === true) {
       setValidated(true);
     };
@@ -49,7 +52,7 @@ export const Loginadv = () => {
             window.location = "/clientlist";
             return res.text();
           } else {
-            alert("User not Found")
+            
           }
           return res.text();
         })
@@ -106,7 +109,7 @@ export const Loginadv = () => {
                   type="email"
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please enter a valid Email id
+                  Please enter a valid Email
                 </Form.Control.Feedback>
               </Form.Group>
 

@@ -7,14 +7,23 @@ import "../styles/forgetPassword.css";
 import { useState } from "react";
 
 export const ForgetPassword = () => {
+  let res1 ;
   const [email, setEmail] = useState("");
+  const [validated, setValidated] = useState(false);
   const ForgotPassword = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    console.log(form.checkValidity())
+  
+    if (form.checkValidity() === true) {
+      setValidated(true);
+    };
+    
     let values = {
       "email": email,
     };
     try {
-      fetch("https://localhost:7061/api/User/Advisor-Forgot-password-without-login", {
+      fetch("https://localhost:7061/api/User/AdvisorForgot", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -25,6 +34,7 @@ export const ForgetPassword = () => {
         body: JSON.stringify(values),
       })
         .then((res) => {
+          res1 = res
           if (res.status == 200) {
             window.location = '/ResetPassword';
 
@@ -33,8 +43,12 @@ export const ForgetPassword = () => {
           return res.text();
         })
         .then((data) => {
+          if (res1.status == 200){
           console.log(data);
-          alert(data);
+          alert(data);}
+          else {
+
+          }
           
         });
     } catch (error) {
@@ -45,7 +59,7 @@ export const ForgetPassword = () => {
     <>
       <Navbarr />
       <div className="forgetPassword">
-        <Form style={{ borderRadius: "20px", boxShadow: "6px 6px 4px rgba(0, 0, 0, 0.2)" }}
+        <Form noValidate validated={validated} style={{ borderRadius: "20px", boxShadow: "6px 6px 4px rgba(0, 0, 0, 0.2)" }}
           className="forgetPasswordForm"
           id="forgetPasswordForm">
           <h3 className="forgetPasswordHeader">Forgot Password</h3>
@@ -53,14 +67,18 @@ export const ForgetPassword = () => {
             Enter email to which reset link will be sent
           </p></center>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Form.Control required type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Form.Control.Feedback type="invalid">
+                  Please enter a valid Email
+                </Form.Control.Feedback>
           </Form.Group>
           <center><Button style={{ fontFamily: "Arial", borderRadius: "14px", width: "50%", borderTop: "0px" }}
             variant="primary"
             type="submit"
             onClick={ForgotPassword}
+            id="btnSave"
           >
-            Send me the verification token
+            Submit
           </Button></center>
         </Form>
       </div>
