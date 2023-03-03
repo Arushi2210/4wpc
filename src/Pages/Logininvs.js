@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../styles/Logininvs.css";
 import axios from "axios";
+import swal from "sweetalert";
 
 export const Logininvs = () => {
   const [email, setEmail] = useState("");
@@ -33,10 +34,17 @@ export const Logininvs = () => {
         },
         body: JSON.stringify(values),
       })
-        .then((res) => {if(res.status===200)alert("User Registered");
+        .then((res) => {if(res.status===200)
+        
+          swal({
+            title: "User Registered",
+            icon: "success",
+            button: "Ok",
+          });
+
                         console.log(res.body);})
         .then((data) => {
-          if(data === "Undefined")alert(data)
+          if(data === "Undefined")swal(data)
           console.log(data);
           window.location='/dashboardinvs'
         });

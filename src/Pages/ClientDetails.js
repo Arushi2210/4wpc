@@ -23,6 +23,7 @@ import "../styles/advprofile.css";
 import Navbar2 from "../Components/navbar2";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Email } from "@mui/icons-material";
+import swal from "sweetalert";
 
 export const ClientDetails = () => {
   let { EcliID } = useParams();
@@ -59,7 +60,12 @@ export const ClientDetails = () => {
     setCont(false);
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -91,16 +97,25 @@ export const ClientDetails = () => {
       })
         .then((res) => {
           if (res.status === 200) {
-            alert("investment added");
+            swal({
+              title: "Investment Added",
+              icon: "Success",
+              button: "OK"
+            });
             window.location = "/clientDetails/" + EcliID;
           }
           if (res.status !== 200) {
-            alert(res.status);
+            swal(res.status);
           }
         })
         .then((data) => {
           if (data === "Undefined") {
-            alert("some error occured");
+            swal({
+              title: "Some Error Occured",
+              text: "Try Again",
+              icon: "Warning",
+              button: "OK"
+            });
           }
           console.log(data);
         });
@@ -113,7 +128,12 @@ export const ClientDetails = () => {
   const deleteinvestment = (id) => {
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -131,7 +151,11 @@ export const ClientDetails = () => {
       })
         .then((res) => res.text())
         .then((data) => {
-          alert("Success");
+          swal({
+            title: "Success",
+            icon: "Success",
+            button: "OK"
+          });
           window.location.reload();
         });
     } catch (error) {
@@ -142,7 +166,12 @@ export const ClientDetails = () => {
   useEffect(() => {
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -177,7 +206,12 @@ export const ClientDetails = () => {
   useEffect(() => {
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -207,7 +241,12 @@ export const ClientDetails = () => {
   useEffect(() => {
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -288,7 +327,12 @@ export const ClientDetails = () => {
     }
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -318,7 +362,13 @@ export const ClientDetails = () => {
         },
         body: JSON.stringify(values),
       }).then((data) => {
-        if (data === "Undefined") alert("some error occured");
+        if (data === "Undefined")  
+         swal({
+          title: "Some error occured",
+          text: "Try Again",
+          icon: "Warning",
+          button: "OK"
+        });
         console.log(data);
       });
     } catch (error) {

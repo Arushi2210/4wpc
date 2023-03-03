@@ -27,6 +27,7 @@ import { useState, useEffect } from "react";
 import picprofile from "../Images/picprofile.png";
 import { Roww } from "./row";
 import { Input } from "@mui/material";
+import swal from "sweetalert";
 
 export const EditClientDetails = () => {
   let { EcliID } = useParams();
@@ -54,7 +55,13 @@ export const EditClientDetails = () => {
     let token = localStorage.getItem("JWT-Token");
 
     if (token == "") {
-      alert("not authorized");
+
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -94,7 +101,12 @@ export const EditClientDetails = () => {
   const handleSaveClick = (e) => {
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-        alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
         window.location = '/loginadv'
       }
       token = "Bearer " + token.replaceAll('"', '');
@@ -129,7 +141,13 @@ export const EditClientDetails = () => {
           
           .then((data) => {
   
-            if (data === "Undefined") alert("some error occured");
+            if (data === "Undefined") 
+            swal({
+              title: "some error occured",
+              text:  "Try Again",
+              icon: "Warning",
+              button: "OK"
+            });
             console.log(data);
             
           });

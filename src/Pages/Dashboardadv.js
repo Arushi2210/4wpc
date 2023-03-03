@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button'
 import { ClientList } from "./ClientList";
 import { useEffect, useState } from "react";
 import "../styles/Dashboardadv.css";
+import swal from 'sweetalert';
 
 
 export function Dashboardadv() {
@@ -11,7 +12,12 @@ export function Dashboardadv() {
     setClientsList([]);
     let token = localStorage.getItem("JWT-Token");
     if(token==""){
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
     }
     let ntoken = "Bearer " + token.replaceAll('"', '');
     ntokenn = ntoken;

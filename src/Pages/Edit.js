@@ -6,6 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Row, Col } from "react-bootstrap";
 import { padding } from "@mui/system";
 import { MDBIcon, MDBRow, MDBCol } from "mdb-react-ui-kit";
+import swal from "sweetalert";
 export const Edit = ({
   strategyid,
   investmentAmount,
@@ -41,7 +42,12 @@ export const Edit = ({
     console.log(listItems[0]);
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -59,7 +65,13 @@ export const Edit = ({
         },
         body: JSON.stringify(listItems[id]),
       }).then((data) => {
-        if (data === "Undefined") alert("some error occured");
+        if (data === "Undefined") 
+        swal({
+          title: "some error occured",
+          text:  "Try Again",
+          icon: "Warning",
+          button: "OK"
+        });
         console.log(data);
       });
     } catch (error) {

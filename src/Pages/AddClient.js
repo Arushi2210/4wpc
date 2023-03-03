@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { MDBIcon } from "mdb-react-ui-kit";
 import "../styles/addclient.css";
 import Navbar2 from "../Components/navbar2";
+import swal from "sweetalert";
 
 export const AddClient = () => {
   // const [firstname,setfirstName]=useState("");
@@ -48,7 +49,12 @@ export const AddClient = () => {
   useEffect(() => {
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
     }
 
     let ntoken = "Bearer " + token.replaceAll('"', "");
@@ -116,10 +122,19 @@ export const AddClient = () => {
         body: JSON.stringify(values),
       })
         .then((res) => {
-          if (res.status === 200) alert("User Registered");
+          if (res.status === 200)  swal({
+            title: "User Registered",
+            icon: "Success",
+            button: "OK"
+          });
         })
         .then((data) => {
-          if (data === "Undefined") alert("some error occured");
+          if (data === "Undefined")   swal({
+            title: "Some Error Occured",
+            text: "Try Again",
+            icon: "Warning",
+            button: "OK"
+          });
           console.log(data);
         });
     } catch (error) {

@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
 import picprofile from "../Images/picprofile.png";
 import "../styles/advprofile.css";
 import Navbar2 from "../Components/navbar2";
+import swal from "sweetalert";
 
 export const AdviserProfile = () => {
   const [firstname, setfirstName] = useState("");
@@ -34,7 +35,7 @@ export const AdviserProfile = () => {
   useEffect(() => {
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal("Sorry", "your are not authorized for this feature");
     }
 
     let ntoken = "Bearer " + token.replaceAll('"', "");
@@ -76,7 +77,7 @@ export const AdviserProfile = () => {
     setDisabled(true);
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
-      alert("not authorized");
+      swal("Sorry", "your are not authorized for this feature");
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -111,7 +112,7 @@ export const AdviserProfile = () => {
         
 
         .then((data) => {
-          if (data === "Undefined") alert("some error occured");
+          if (data === "Undefined") swal("some error occured");
           console.log(data);
         });
     } catch (error) {

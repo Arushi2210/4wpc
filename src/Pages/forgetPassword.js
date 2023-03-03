@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../styles/forgetPassword.css";
 import { useState } from "react";
+import swal from "sweetalert";
 
 export const ForgetPassword = () => {
   let res1 ;
@@ -45,7 +46,7 @@ export const ForgetPassword = () => {
         .then((data) => {
           if (res1.status == 200){
           console.log(data);
-          alert(data);}
+          swal(data);}
           else {
 
           }

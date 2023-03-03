@@ -7,6 +7,7 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import Navbar2 from "../Components/navbar2";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import swal from "sweetalert";
 
 export const ClientList = () => {
   const [clientsList, setClientsList] = useState([]);
@@ -15,7 +16,12 @@ export const ClientList = () => {
     let token = localStorage.getItem("JWT-Token");
 
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -47,9 +53,14 @@ export const ClientList = () => {
 
   const deleteclient = (c) => {
     let token = localStorage.getItem("JWT-Token");
-    alert(token);
+    swal(token);
     if (token == "") {
-      alert("not authorized");
+      swal({
+        title: "Sorry",
+        text: "your are not authorized for this feature",
+        icon: "Warning",
+        button: "OK"
+      });
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
@@ -68,7 +79,11 @@ export const ClientList = () => {
       })
         .then((res) => res.text())
         .then((data) => {
-          alert("Success");
+          swal({
+            title: "Success",
+            icon: "Success",
+            button: "OK"
+          });
           window.location.reload();
         });
     } catch (error) {
@@ -95,13 +110,43 @@ export const ClientList = () => {
         <td style={{ alignItems: "left" }}>{e.phone}</td>
         <td style={{ alignItems: "left" }}>
           <div>
-            <DeleteIcon onClick={() => deleteclient(e.clientID)}></DeleteIcon>
+
+
+            {/* <DeleteIcon onClick={() => deleteclient(e.clientID)}></DeleteIcon> */}
+          
+  
+         
+           <DeleteIcon onClick={() => handleDeleteClient(e.clientID)}></DeleteIcon>
+           
+
           </div>
         </td>
       </tr>
     );
   });
 
+  const handleDeleteClient = (clientID) => {
+           
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this client !",
+      icon: "Warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        // Call delete client function here
+        deleteclient(clientID);
+        swal("Your Client has been deleted!", {
+          icon: "Success",
+        });
+      } else {
+        swal("Your Client is safe!");
+      }
+    })
+  }
+     
   return (
     <>
       <Navbar2 />

@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { MDBRow, MDBCol, MDBContainer } from "mdbreact";
 import "../styles/SignUp.css";
+import swal from "sweetalert";
 
 
 function SignUpp() {
@@ -71,12 +72,26 @@ function SignUpp() {
           body: JSON.stringify(values),
         }
         ).then((res) => {
-          if (res.status === 200) { alert("User Registered"); window.location = '/Loginadv' }
-          // if (res.status !== 200) { alert("something went wrong"); window.location = '/SignUpp' }
+          if (res.status === 200) { 
+           
+            swal({
+              title: "User Registered ! ",
+              text: "Now you can sign in your account",
+              icon: "success",
+              button: "OK",
+            });
+          window.location = '/Loginadv' }
+          // if (res.status !== 200) { swal("something went wrong"); window.location = '/SignUpp' }
         })
           .then((data) => {
             if (data === "Undefined") {
-              alert("some error occured");
+             
+              swal({
+                title: "some error occured",
+                text: "Try Again",
+                icon: "warning",
+                button: "OK",
+              });
             }
             console.log(data);
           });
