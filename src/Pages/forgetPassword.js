@@ -22,7 +22,9 @@ export const ForgetPassword = () => {
     let values = {
       "email": email,
     };
+    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)){
     try {
+      
       fetch("https://localhost:7061/api/User/AdvisorForgot", {
         method: "POST",
         headers: {
@@ -54,6 +56,7 @@ export const ForgetPassword = () => {
     } catch (error) {
       console.log("Error-> ", error);
     }
+  }
   }
   return (
     <>

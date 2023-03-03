@@ -7,6 +7,7 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import Navbar2 from "../Components/navbar2";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {GrFormView} from "react-icons/gr"
 
 export const ClientList = () => {
   const [clientsList, setClientsList] = useState([]);
@@ -53,8 +54,7 @@ export const ClientList = () => {
       window.location = "/loginadv";
     }
     token = "Bearer " + token.replaceAll('"', "");
-
-    try {
+       try {
       console.log("made a get call");
       fetch(`https://localhost:7061/api/User/Delete?id=${c}`, {
         method: "DELETE",
@@ -95,7 +95,8 @@ export const ClientList = () => {
         <td style={{ alignItems: "left" }}>{e.phone}</td>
         <td style={{ alignItems: "left" }}>
           <div>
-            <DeleteIcon onClick={() => deleteclient(e.clientID)}></DeleteIcon>
+            <DeleteIcon style={{marginLeft:"6px"}} onClick={() => deleteclient(e.clientID)}></DeleteIcon>
+            <Button style={{paddingRight:"2px"}} href={"/clientDetails/" + e.clientID} variant="link"><GrFormView size="31px" /></Button>
           </div>
         </td>
       </tr>

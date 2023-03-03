@@ -29,13 +29,11 @@ export const Loginadv = () => {
     if (form.checkValidity() === true) {
       setValidated(true);
     };
-    
-    
-
     let values = {
       email: email,
       password: password,
     };
+    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && password != "" ){
     try {
       fetch("https://localhost:7061/api/User/AdvisorLogin", {
         method: "POST",
@@ -52,7 +50,7 @@ export const Loginadv = () => {
             window.location = "/clientlist";
             return res.text();
           } else {
-            
+            alert("Invalid Username or password")
           }
           return res.text();
         })
@@ -62,7 +60,7 @@ export const Loginadv = () => {
     } catch (error) {
       console.log("Error-> ", error);
     }
-  
+    }
   };
   return (
     <>
