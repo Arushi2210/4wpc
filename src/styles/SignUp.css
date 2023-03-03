@@ -35,6 +35,9 @@
   height: 10%;
   width: 10%;
 }
+.text-danger{
+  font-size: 14px;
+}
 #btnSave {
   
   background-color: #212529;

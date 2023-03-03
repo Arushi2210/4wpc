@@ -20,7 +20,7 @@ export const Edit = ({
     setDisabled(false);
   };
   const funcSave = (e) => {
-    setDisabled(true);
+    
     const listItems = (listofinvestment || []).map((it) =>
       it.strategyid === strategyid ? { ...it, investmentAmount: value } : it
     );
@@ -52,7 +52,8 @@ export const Edit = ({
     }
     token = "Bearer " + token.replaceAll('"', "");
     e.preventDefault();
-
+    if (value != ""){
+      setDisabled(true);
     try {
       fetch(`https://localhost:7061/api/Investment/update`, {
         method: "PUT",
@@ -77,6 +78,7 @@ export const Edit = ({
     } catch (error) {
       console.log("Error-> ", error);
     }
+  }
   };
   return (
     <>
@@ -95,14 +97,17 @@ export const Edit = ({
       {!disabled && (
         <Row>
           <Col xs={7} style={{ padding: "0px" }}>
+            <Form.Group>
             <Form.Control
+              required = {true}
               type="number"
               placeholder="Enter amount"
               value={value}
               onChange={(e) => {
                 setValue(e.target.value);
               }}
-            />
+            /><span>This field can't be empty</span>
+            </Form.Group>
           </Col>
           <Col style={{ padding: "0px" }}>
             <Button variant="dark" onClick={funcSave}>

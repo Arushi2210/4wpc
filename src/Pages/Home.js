@@ -35,7 +35,7 @@ function Home() {
                   With our Portfolio Management System, managing your investments has never been easier. From analyzing performance to rebalancing your portfolio, our system takes care of everything, so you can sit back and watch your investments grow.
                 </p>
                 <center>
-                  <Button style={{ marginTop: "2%", fontFamily: "Arial", borderRadius: "14px", marginBottom: "4%", width: "50%" }} href='/SignUpp' variant="primary" type="submit">
+                  <Button id="btnSave" style={{ marginTop: "2%", fontFamily: "Arial", borderRadius: "14px", marginBottom: "4%", width: "50%" }} href='/SignUpp' variant="primary" type="submit">
                     Get started!
                   </Button>
                 </center>

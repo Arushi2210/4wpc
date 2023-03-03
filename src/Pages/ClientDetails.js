@@ -6,6 +6,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import { Row, Col } from "react-bootstrap";
 import { Edit } from "./Edit";
+import Feedback from 'react-bootstrap/Feedback'
 
 import {
   MDBCol,
@@ -56,8 +57,12 @@ export const ClientDetails = () => {
     }
   };
 
-  const funcSave = () => {
-    setCont(false);
+  const funcSave = (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      setValidated(true);}
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
       swal({
@@ -81,7 +86,8 @@ export const ClientDetails = () => {
       modelAPLID: modelAPLid,
       investmentAmount: investmentAmount,
     };
-    console.log(values);
+    if (investmentname != "" && investmentAmount != "" && strategyName !="" && modelAPLid != "" && investmenttype != ""){
+      setCont(false);
     try {
       console.log("made a fetch call");
       fetch("https://localhost:7061/api/Investment/Create", {
@@ -123,6 +129,7 @@ export const ClientDetails = () => {
       console.log("Error-> ", error);
     }
     setCont(false);
+  }
   };
 
   const deleteinvestment = (id) => {
@@ -317,10 +324,10 @@ export const ClientDetails = () => {
     setDisabled(false);
   };
   const save = (e) => {
-    setDisabled(true);
+    
     e.preventDefault();
     const form = e.currentTarget;
-    console.log(form.checkValidity());
+   
 
     if (form.checkValidity() === true) {
       setValidated(true);
@@ -349,7 +356,9 @@ export const ClientDetails = () => {
       advisorID: "string",
       clientID: EcliID,
     };
-    console.log(values);
+    if (lastname != "" && firstname != "" && /^([0-9]{10})$/.test(phone) && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) ){
+      console.log("00000")
+      setDisabled(true);
     try {
       fetch(`https://localhost:7061/api/User/Update?ClientId=${EcliID}`, {
         method: "PUT",
@@ -374,6 +383,7 @@ export const ClientDetails = () => {
     } catch (error) {
       console.log("Error-> ", error);
     }
+  }
   };
 
   return (
@@ -530,8 +540,8 @@ export const ClientDetails = () => {
                               <Form.Control
                                 value={company}
                                 onChange={(e) => setcompany(e.target.value)}
-                                type="phone"
-                                placeholder="Phone"
+                                type="text"
+                                placeholder="Company"
                               />
                             )}
                           </MDBCol>
@@ -546,8 +556,8 @@ export const ClientDetails = () => {
                               <Form.Control
                                 value={address}
                                 onChange={(e) => setaddress(e.target.value)}
-                                type="phone"
-                                placeholder="Phone"
+                                type="text"
+                                placeholder="Address"
                               />
                             )}
                           </MDBCol>
@@ -564,8 +574,8 @@ export const ClientDetails = () => {
                               <Form.Control
                                 value={city}
                                 onChange={(e) => setcity(e.target.value)}
-                                type="phone"
-                                placeholder="Phone"
+                                type="text"
+                                placeholder="State"
                               />
                             )}
                           </MDBCol>
@@ -581,7 +591,7 @@ export const ClientDetails = () => {
                                 value={state}
                                 onChange={(e) => setstate(e.target.value)}
                                 type="phone"
-                                placeholder="Phone"
+                                placeholder="State"
                               />
                             )}
                           </MDBCol>
@@ -644,7 +654,7 @@ export const ClientDetails = () => {
         </Button>
         {cont && (
           <div className="contAddTrans">
-            <Form className="formAddTrans">
+            <Form className="formAddTrans" noValidate validated={validated}>
               <Row>
                 <Form.Group
                   as={Col}
@@ -659,13 +669,14 @@ export const ClientDetails = () => {
                     required={true}
                     type="text"
                     placeholder="Investment name"
-                  />
+                  /><Form.Control.Feedback type="invalid">This field is required</Form.Control.Feedback>
                   
                 </Form.Group>
 
                 <Form.Group as={Col} sm style={{ paddingBottom: "15px" }}>
                   <Form.Select
                     aria-label="Default select example"
+                    required
                     onChange={(e) => {
                       setInvestmenttype(e.target.value);
                     }}
@@ -674,34 +685,37 @@ export const ClientDetails = () => {
                     <option value="Type-1">Type-1</option>
                     <option value="Type-2">Type-2</option>
                     <option value="Type-3">Type-3</option>
-                  </Form.Select>
+                  </Form.Select><Form.Control.Feedback type="invalid">Please select a investment type</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} sm className="mb-3">
                   <Form.Control
+                    required={true}
                     type="text"
                     placeholder="Strategy Name"
                     onChange={(e) => {
                       setStrategyname(e.target.value);
                     }}
-                  />
+                  /><Form.Control.Feedback type="invalid">Please select a investment type</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} sm className="mb-3">
                   <Form.Control
+                    required={true}
                     type="text"
                     placeholder="Modle APLID"
                     onChange={(e) => {
                       setModelAPLid(e.target.value);
                     }}
-                  />
+                  /><Form.Control.Feedback type="invalid">This field is required</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} sm className="mb-3">
                   <Form.Control
+                    required={true}
                     type="number"
                     placeholder="Amount"
                     onChange={(e) => {
                       setInvestmentAmount(e.target.value);
                     }}
-                  />
+                  /><Form.Control.Feedback type="invalid">This field is required</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} sm className="mb-3">
                   <Button

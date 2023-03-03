@@ -74,7 +74,7 @@ export const AdviserProfile = () => {
 
   };
   const save = (e) => {
-    setDisabled(true);
+    
     let token = localStorage.getItem("JWT-Token");
     if (token == "") {
       swal("Sorry", "your are not authorized for this feature");
@@ -93,7 +93,9 @@ export const AdviserProfile = () => {
       email: email,
       advisorID: adbisorId,
     };
-
+    if (lastname != "" && firstname != "" && /^([0-9]{10})$/.test(phone) && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)){
+      setDisabled(true);
+    
     try {
       fetch(
         "https://localhost:7061/api/User/Update",
@@ -118,7 +120,7 @@ export const AdviserProfile = () => {
     } catch (error) {
       console.log("Error-> ", error);
     }
-  
+    }
   };
 
   return (
@@ -249,7 +251,7 @@ export const AdviserProfile = () => {
                               value={company}
                               onChange={(e) => setcompany(e.target.value)}
                               type="text"
-                              placeholder="City"
+                              placeholder="Company"
                             />
                           )}
                         </MDBCol>
@@ -265,7 +267,7 @@ export const AdviserProfile = () => {
                               value={address}
                               onChange={(e) => setaddress(e.target.value)}
                               type="text"
-                              placeholder="City"
+                              placeholder="Address"
                             />
                           )}
                         </MDBCol>
@@ -299,7 +301,7 @@ export const AdviserProfile = () => {
                               value={state}
                               onChange={(e) => setstate(e.target.value)}
                               type="text"
-                              placeholder="City"
+                              placeholder="State"
                             />
                           )}
                         </MDBCol>

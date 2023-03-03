@@ -30,8 +30,8 @@ export const AddClient = () => {
   const [City, setCity] = useState("");
   const [State, setState] = useState("");
   const [Address, setAddress] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("string");
+  const [password, setPassword] = useState("string");
   const [bearertoken, setBearertoken] = useState("");
   const [validated, setValidated] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -108,8 +108,9 @@ export const AddClient = () => {
       password: password,
       confirmPassword: confirmPassword,
     };
-
-    try {
+    if (lastName != "" && firstName != "" && /^([0-9]{10})$/.test(Phone) && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(Email))
+    {
+      try {
       fetch("https://localhost:7061/api/User/Registration", {
         method: "POST",
         headers: {
@@ -127,6 +128,7 @@ export const AddClient = () => {
             icon: "Success",
             button: "OK"
           });
+          window.location = "/clientlist";
         })
         .then((data) => {
           if (data === "Undefined")   swal({
@@ -139,7 +141,7 @@ export const AddClient = () => {
         });
     } catch (error) {
       console.log("Error-> ", error);
-    }
+    }}
   };
   const handlePasswordChange = (event) => {
     const password = event.target.value;
@@ -230,7 +232,7 @@ export const AddClient = () => {
                     type="email"
                     placeholder="Email"
                   />
-                  <Form.Control.Feedback type="invalid">Enter Email-id of client</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Enter a valid Email-id of client</Form.Control.Feedback>
                 </Form.Group>
               </Col>
               <Col>
@@ -243,12 +245,12 @@ export const AddClient = () => {
                     pattern="[0-9]{10}"
                     placeholder="Phone"
                   />
-                  <Form.Control.Feedback type="invalid">Enter phone number of client</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Enter valid phone number of client</Form.Control.Feedback>
                 </Form.Group>
               </Col>
             </Row>
 
-            <Row className="mb-3">
+            {/* <Row className="mb-3">
               <Form.Group
                 as={Col}
                 md
@@ -268,7 +270,7 @@ export const AddClient = () => {
               </Form.Group>
 
               <Form.Group as={Col} md controlId="formGridPassword">
-                {/* <Form.Label>Confirm Password</Form.Label> */}
+                
                 <Form.Control
                 required
                   value={confirmPassword}
@@ -280,7 +282,7 @@ export const AddClient = () => {
                 <Form.Control.Feedback type="invalid">Passwords do not match.</Form.Control.Feedback>
                 
               </Form.Group>
-            </Row>
+            </Row> */}
             <center>
               <Button
                 id="btnSave"

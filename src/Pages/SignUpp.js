@@ -58,7 +58,7 @@ function SignUpp() {
         password: password,
         confirmPassword: confirmPassword
       };
-
+      if (lastname != "" && firstname != "" && /^([0-9]{10})$/.test(phone) && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password) && confirmPassword === password)
       try {
         console.log("made a fetch call");
         fetch("https://localhost:7061/api/User/Registration", {
